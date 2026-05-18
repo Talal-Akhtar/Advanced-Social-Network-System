@@ -100,10 +100,8 @@ Architecture: Modular (Separate classes/modules)
 ▶️ How to Run
 Clone the repository:
 git clone https://github.com/your-username/advanced-social-network.git
-Compile the project:
-g++ main.cpp -o social_network
-Run:
-./social_network
+Compile the project: g++ main.cpp -o social_network
+Run: ./social_network
 
 
 Contributions are welcome! Feel free to fork and improve the system.
