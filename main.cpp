@@ -365,14 +365,14 @@ void loadSampleData(Graph& graph, MessagingSystem& ms,
     ms.sendMessage(2, 1, "Hi Alice, how are you?");
     ms.sendMessage(3, 1, "Alice, are you coming tonight?");
 
-    // Posts
+    // Posts Raw data for testing
     nfs.createPost(1, "Just learned about neural networks. Fascinating!");
     nfs.createPost(2, "Great game last night! Go team!");
     nfs.createPost(3, "Amazing trip to Paris this weekend!");
     nfs.createPost(4, "Anyone up for a run tomorrow?");
     nfs.createPost(7, "Just completed my AI project!");
 
-    // Likes and comments
+    // Likes and comments raw data for testing
     nfs.likePost(1, 2);
     nfs.likePost(1, 7);
     nfs.commentPost(1, 3, "Sounds cool!");
