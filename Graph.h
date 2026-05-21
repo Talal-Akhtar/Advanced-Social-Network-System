@@ -21,8 +21,8 @@ struct EdgeNode {
 
 struct AdjRow {
     int      userID;
-    EdgeNode* edges;   // linked list of edges
-    AdjRow*  next;     // next row in the table
+    EdgeNode* edges;   
+    AdjRow*  next;     
 
     AdjRow(int id) : userID(id), edges(nullptr), next(nullptr) {}
 };
@@ -35,8 +35,8 @@ struct UserNode {
 
 class Graph {
 private:
-    UserNode* userList;   // linked list of all users
-    AdjRow*   adjList;    // linked list of adjacency rows
+    UserNode* userList;   
+    AdjRow*   adjList;    
     int       userCount;
 
     AdjRow* getRow(int id) const {
@@ -165,7 +165,6 @@ public:
 
         double w = computeWeight(id1, id2, freq, msgs);
 
-        // Check if already exists; if so update
         AdjRow* r1 = getRow(id1);
         EdgeNode* e = r1->edges;
         while (e) {
@@ -187,7 +186,6 @@ public:
             e = e->next;
         }
 
-        // Add edge id1 -> id2
         EdgeNode* e1 = new EdgeNode(id2, w, msgs, freq);
         e1->next = r1->edges; r1->edges = e1;
 
@@ -273,15 +271,9 @@ public:
         }
     }
 
-    // -- BFS helper (returns int array, caller frees) -----------
-    // Returns distance array; -1 = unreachable
-    // Uses a simple queue implemented as linked list
     struct QNode { int id; QNode* next; QNode(int i) : id(i), next(nullptr) {} };
 
     int* bfsDistances(int srcID) const {
-        // map userID -> index  (simple scan)
-        // We'll store dist in a parallel int array indexed by userID
-        // Find max userID first
         int maxID = 0;
         UserNode* un = userList;
         while (un) { if (un->user.userID > maxID) maxID = un->user.userID; un = un->next; }
@@ -315,7 +307,7 @@ public:
                 e = e->next;
             }
         }
-        return dist;  // caller must delete[]
+        return dist;  
     }
 };
 
