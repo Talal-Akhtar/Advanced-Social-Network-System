@@ -11,7 +11,7 @@ struct Message {
     int    fromID;
     int    toID;
     string content;
-    string timestamp;   // simple string timestamp
+    string timestamp;   
 
     Message() : msgID(0), fromID(0), toID(0) {}
     Message(int id, int from, int to, const string& c, const string& ts)
@@ -97,8 +97,6 @@ private:
         inboxList = e;
         return e;
     }
-
-    // Simple timestamp from counter
     string makeTimestamp() {
         string ts = "MSG#";
         int n = ++msgCounter;
@@ -133,8 +131,6 @@ public:
         getInbox(toID)->inbox.enqueue(m);
 
         if (graph.areFriends(fromID, toID)) {
-            // We simply re-add with bumped msg count
-            // (fetch current edge to get freq & msgs)
             AdjRow* row = graph.getAdjList();
             while (row && row->userID != fromID) row = row->next;
             if (row) {
@@ -145,7 +141,6 @@ public:
                         // recompute weight
                         double w = graph.computeWeight(fromID, toID, e->interactionFreq, e->msgCount);
                         e->weight = w;
-                        // also update reverse
                         AdjRow* r2 = graph.getAdjList();
                         while (r2 && r2->userID != toID) r2 = r2->next;
                         if (r2) {
@@ -179,7 +174,6 @@ public:
         cout << "================================================" << endl;
     }
 
-    // Read (dequeue) next message
     void readNextMessage(int userID) {
         User* u = graph.getUser(userID);
         if (!u) { cout << "[!] User not found." << endl; return; }
