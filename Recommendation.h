@@ -83,7 +83,6 @@ class FriendRecommender {
 private:
     const Graph& graph;
 
-    // Count mutual friends between u and candidate
     int mutualFriends(int uID, int candID) const {
         int count = 0;
         AdjRow* ru = graph.getAdjList();
@@ -93,7 +92,6 @@ private:
 
         EdgeNode* eu = ru->edges;
         while (eu) {
-            // check if eu->toID is also a friend of cand
             AdjRow* rc = graph.getAdjList();
             while (rc && rc->userID != candID) rc = rc->next;
             if (rc) {
@@ -128,7 +126,6 @@ public:
             int mutual  = mutualFriends(userID, candID);
             int common  = u->commonInterests(cur->user);
 
-            // Score: mutual friends carry most weight, then interests
             double score = mutual * 3.0 + common * 2.0;
 
             if (score > 0) {
