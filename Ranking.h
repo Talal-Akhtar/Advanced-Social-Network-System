@@ -37,7 +37,6 @@ private:
         return e.activityScore + e.friendCount * 2.0;
     }
 
-    // Insertion sort on linked list  (descending by totalScore)
     RankNode* insertionSort(RankNode* head) const {
         if (!head || !head->next) return head;
         RankNode* sorted = nullptr;
@@ -97,7 +96,6 @@ public:
             cout << "   " << cur->entry.rank;
             cout << "   | ";
 
-            // Pad name to 17 chars
             string padded = cur->entry.name;
             while ((int)padded.size() < 17) padded += ' ';
             cout << padded << " | ";
