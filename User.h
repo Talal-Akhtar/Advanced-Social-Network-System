@@ -76,7 +76,7 @@ struct User {
     int         userID;
     string      name;
     int         age;
-    StringList  interests;   // linked list of interest strings
+    StringList  interests;   
     double      activityScore;
     bool        isOnline;
 
