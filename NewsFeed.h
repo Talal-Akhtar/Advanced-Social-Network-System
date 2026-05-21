@@ -12,14 +12,13 @@ struct Post {
     string content;
     int    likes;
     int    comments;
-    int    timestamp;   // integer tick (higher = more recent)
+    int    timestamp;   
 
     Post() : postID(0), authorID(0), likes(0), comments(0), timestamp(0) {}
     Post(int pid, int aid, const string& c, int ts)
         : postID(pid), authorID(aid), content(c),
           likes(0), comments(0), timestamp(ts) {}
 
-    // Feed score: recency * 0.5 + popularity * 0.5
     double feedScore() const {
         return timestamp * 0.5 + (likes + comments) * 0.5;
     }
@@ -93,7 +92,7 @@ class NewsFeedSystem {
 private:
     PostNode* allPosts;
     int       postCounter;
-    int       tick;         // global time tick
+    int       tick;        
     Graph&    graph;
 
 public:
@@ -117,7 +116,6 @@ public:
         node->next = allPosts;
         allPosts   = node;
 
-        // Increase activity score
         u->activityScore += 5.0;
 
         cout << "[+] " << u->name << " posted: \"" << content << "\"  [PostID:" << postCounter << "]" << endl;
@@ -145,7 +143,6 @@ public:
             if (cur->post.postID == postID) {
                 cur->post.comments++;
                 tick++;
-                // Bump post timestamp to reflect fresh engagement
                 cur->post.timestamp = tick;
                 User* commenter = graph.getUser(commenterID);
                 User* author    = graph.getUser(cur->post.authorID);
@@ -159,7 +156,6 @@ public:
         cout << "[!] Post not found." << endl;
     }
 
-    // Display top-K feed posts from user's friends (and self)
     void generateFeed(int userID, int topK) const {
         User* u = graph.getUser(userID);
         if (!u) { cout << "[!] User not found." << endl; return; }
@@ -169,7 +165,6 @@ public:
         PostNode* cur = allPosts;
         while (cur) {
             int aid = cur->post.authorID;
-            // include own posts and friends' posts
             if (aid == userID || graph.areFriends(userID, aid)) {
                 fh.push(cur->post);
             }
