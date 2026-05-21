@@ -72,7 +72,6 @@ class PathFinder {
 private:
     const Graph& graph;
 
-    // Find max userID to size arrays
     int maxUserID() const {
         int mx = 0;
         UserNode* u = graph.getUserList();
@@ -100,14 +99,14 @@ public:
         bool*   visit = new bool[N];
 
         for (int i = 0; i < N; i++) {
-            dist[i]  = -DBL_MAX;   // -∞ (we maximise weight)
+            dist[i]  = -DBL_MAX;  
             prev[i]  = -1;
             visit[i] = false;
         }
         dist[srcID] = 0.0;
 
         MinHeapDijk pq;
-        pq.push(srcID, 0.0);   // we push negative dist for max-weight
+        pq.push(srcID, 0.0);   
 
         while (!pq.empty()) {
             DijkEntry cur = pq.pop();
@@ -126,17 +125,15 @@ public:
                 if (v < N && dist[u] + w > dist[v]) {
                     dist[v] = dist[u] + w;
                     prev[v] = u;
-                    pq.push(v, -dist[v]);   // negate for min-heap to act as max-heap
+                    pq.push(v, -dist[v]);   
                 }
                 e = e->next;
             }
         }
 
-        // Reconstruct path
         if (dist[dstID] == -DBL_MAX) {
             cout << "[!] No path found between users " << srcID << " and " << dstID << "." << endl;
         } else {
-            // Build path in reverse using a stack (linked list)
             struct SNode { int id; SNode* next; };
             SNode* stack = nullptr;
             int cur = dstID;
@@ -176,7 +173,6 @@ public:
         int* prev = new int[N];
         for (int i = 0; i < N; i++) prev[i] = -1;
 
-        // Redo BFS saving predecessors
         bool* visited = new bool[N];
         for (int i = 0; i < N; i++) visited[i] = false;
 
